@@ -5,7 +5,6 @@ os:
   - linux
 sudo: false
 addons:
-  # chrome: stable
   apt:
     sources:
       - ubuntu-toolchain-r-test # you need this source to get the right version of libstdc++6
@@ -19,16 +18,15 @@ before_script:
   - git clone https://github.com/flutter/flutter.git
   - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
   - flutter doctor
-  # - pub global activate flutter_plugin_tools
 script:
   - cd $TRAVIS_BUILD_DIR
   - flutter packages get
   - flutter analyze --no-pub --no-current-package lib
-  # - flutter test
+  - flutter test
   - flutter packages pub publish --dry-run
 before_deploy:
   - chmod +x ./.travis/publish.sh # giving execution permissions to this file to avoid error 127.
-  - mv ./.travis ../
+  - mv ./.travis ../ # moving this out the publication folder as we don't want to publish it.
 deploy:
   provider: script
   skip_cleanup: true
