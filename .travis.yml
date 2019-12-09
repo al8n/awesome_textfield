@@ -4,13 +4,17 @@ dart:
 os:
   - linux
 sudo: false
+dist: bionic
 addons:
   apt:
-    sources:
-      - ubuntu-toolchain-r-test # you need this source to get the right version of libstdc++6
     packages:
-      - libstdc++6
-      - fonts-droid
+      - lib32stdc++6
+git:
+  depth: 3
+env:
+  - FLUTTER_VERSION=stable
+  - FLUTTER_VERSION=beta
+  - FLUTTER_VERSION=dev
 install:
   - echo 'Avoid default Travis CI install step' # this is to avoid an error with pub in Travis
 before_script:
@@ -33,7 +37,7 @@ deploy:
   script: '../.travis/publish.sh'
   on:
     tags: true
-dist: xenial
+
 cache:
   directories:
     - $HOME/.pub-cache
